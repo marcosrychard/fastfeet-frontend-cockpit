@@ -1,0 +1,13 @@
+::ng-deep {
+  #recipient-list {
+    .search {
+      height: 40px;
+    }
+
+    .action {
+      cursor: pointer;
+      text-align: center;
+      color: #c6c6c6;
+    }
+  }
+}

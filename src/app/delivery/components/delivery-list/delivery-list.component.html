@@ -1,0 +1,83 @@
+<main id="delivery-list" class="container mt-4">
+  <app-page-header-list [title]="'Gerenciando encomendas'" [label]="'Buscar por encomendas'"
+    [link]="'/cockpit/delivery/form'" [iconName]="'add'" [buttonName]="'CADASTRAR'">
+  </app-page-header-list>
+
+  <section class="row mb-5 table-custom">
+    <table mat-table [dataSource]="dataSource" class="w-100">
+
+      <!-- Destinatário -->
+      <ng-container matColumnDef="recipient">
+        <th mat-header-cell *matHeaderCellDef>Destinatário</th>
+        <td mat-cell *matCellDef="let element" data-label="Destinatário">
+          {{ element.recipient.name }}
+        </td>
+      </ng-container>
+
+      <!-- Entregador -->
+      <ng-container matColumnDef="deliveryman">
+        <th mat-header-cell *matHeaderCellDef>Entregador</th>
+        <td mat-cell *matCellDef="let element" data-label="Entregador">
+          {{ element.deliveryman.name }}
+        </td>
+      </ng-container>
+
+      <!-- Cidade -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>Cidade</th>
+        <td mat-cell *matCellDef="let element" data-label="Cidade">
+          {{ element.recipient.city }}
+        </td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let element" data-label="Estado">
+          {{ element.recipient.state }}
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element" data-label="Status">
+          <div class="delivery-status d-flex align-items-center w-75"
+            [style.color]="element?.delivery_status.primary_color"
+            [style.background-color]="element?.delivery_status.segudary_color">
+            <span class="material-icons point">
+              fiber_manual_record
+            </span>
+            {{ element?.delivery_status?.description }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- AÇÃO -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef class="text-center">
+          AÇÃO
+        </th>
+        <td mat-cell *matCellDef="let element" class="action" data-label="AÇÃO">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog()">
+              <mat-icon>remove_red_eye</mat-icon>
+              <span>Visualizar</span>
+            </button>
+            <button mat-menu-item (click)="goForm(element)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </section>
+</main>

@@ -1,0 +1,16 @@
+<main class="col-12 px-0">
+  <h4 class="title col-12 mb-4 px-0">{{ title }}</h4>
+  <form autocomplete="off" class="row align-items-center search">
+    <mat-form-field class="col-6 px-0">
+      <mat-label>{{ label }}</mat-label>
+      <mat-icon matPrefix class="mr-2">search</mat-icon>
+      <input matInput autocomplete="off" />
+    </mat-form-field>
+
+    <section class="button col-6 px-0 text-right">
+      <button mat-raised-button class="button-primary" [routerLink]="link">
+        <mat-icon>{{ iconName }}</mat-icon> {{ buttonName }}
+      </button>
+    </section>
+  </form>
+</main>

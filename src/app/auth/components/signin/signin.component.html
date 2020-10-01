@@ -1,0 +1,31 @@
+<main class="signin d-flex justify-content-center align-items-center">
+  <mat-card class="card-signin">
+    <mat-card-content class="mb-5">
+      <p class="d-flex justify-content-center my-5">
+        <img src="./assets/imgs/fastfeet-logo.png" />
+      </p>
+
+      <form class="row px-3" [formGroup]="signinForm">
+
+        <!-- SEU E-MAIL -->
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>SEU E-MAIL</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+
+        <!-- SUA SENHA -->
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>SUA SENHA</mat-label>
+          <input matInput type="password" formControlName="password" />
+        </mat-form-field>
+
+        <!-- Entrar no sistema -->
+        <div class="col-12">
+          <button mat-raised-button class="btn-signin btn-block py-2" (click)="onSubmit()">
+            Entrar no sistema
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>

@@ -1,0 +1,15 @@
+<main class="container">
+  <section class="d-flex justify-content-between mb-2">
+    <article>
+      <h4 class="title mb-4 px-0">{{ title }}</h4>
+    </article>
+    <article>
+      <button mat-raised-button class="button-secondary mr-3" [routerLink]="link_back">
+        <mat-icon>keyboard_arrow_left</mat-icon> VOLTAR
+      </button>
+      <button mat-raised-button class="button-primary" (click)="submit()">
+        <mat-icon>done</mat-icon> {{name?.label}}
+      </button>
+    </article>
+  </section>
+</main>

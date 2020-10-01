@@ -1,0 +1,16 @@
+::ng-deep {
+  .signin {
+    background-color: #7d40e7;
+    height: 100vh;
+
+    .card-signin {
+      width: 360px;
+    }
+
+    .btn-signin {
+      background-color: #7d40e7;
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+}
