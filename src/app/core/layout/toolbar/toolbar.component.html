@@ -1,0 +1,30 @@
+<section id="toolbar" class="w-100 mb-4">
+  <mat-toolbar class="mat-elevation-z1">
+    <a class="mr-3" routerLink=".">
+      <img src="./assets/imgs/fastfeet-logo.png" width="135" />
+    </a>
+    <section>
+      <mat-nav-list role="navigation" class="d-flex list mx-3">
+        <mat-divider [vertical]="true" class="mb-2 mt-1 mx-2"></mat-divider>
+        <ng-template appClaims [appClaims]="claims">
+          <mat-list-item routerLink="delivery" routerLinkActive="active">
+            ENCOMENDAS
+          </mat-list-item>
+          <mat-list-item routerLink="deliveryman" routerLinkActive="active">
+            ENTREGADORES
+          </mat-list-item>
+          <mat-list-item routerLink="recipient" routerLinkActive="active">
+            DESTINATÁRIOS
+          </mat-list-item>
+          <mat-list-item routerLink="delivery-problem" routerLinkActive="active">
+            PROBLEMAS
+          </mat-list-item>
+        </ng-template>
+      </mat-nav-list>
+    </section>
+    <aside class="user-info ml-auto pr-4">
+      <span class="user-name">{{dataAuth?.user?.name}}</span>
+      <span class="singout" (click)="logout()">Sair do sistema</span>
+    </aside>
+  </mat-toolbar>
+</section>

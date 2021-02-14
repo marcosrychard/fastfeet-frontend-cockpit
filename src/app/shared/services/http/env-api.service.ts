@@ -1,32 +1,32 @@
-import { Injectable } from "@angular/core";
-import { EnvConfigService } from "./env-config.service";
+import { Injectable } from '@angular/core';
+import { EnvConfigService } from './env-config.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class EnvApiService {
-  private api_root = "";
+  private apiRoot = '';
   constructor(private config: EnvConfigService) {
-    this.api_root = config.getConfig("api_root");
+    this.apiRoot = config.getConfig('api_root');
   }
 
   getApiDelivery() {
-    return this.api_root + this.config.getConfig("delivery");
+    return this.apiRoot + this.config.getConfig('deliveries');
   }
 
   getApiDeliveryman() {
-    return this.api_root + this.config.getConfig("deliveryman");
+    return this.apiRoot + this.config.getConfig('deliverymans');
   }
 
   getApiRecipient() {
-    return this.api_root + this.config.getConfig("recipient");
+    return this.apiRoot + this.config.getConfig('recipients');
   }
 
-  getApiDeliveryProblem(){
-    return this.api_root + this.config.getConfig("delivery_problem");
+  getApiDeliveryProblem() {
+    return this.apiRoot + this.config.getConfig('delivery_problem');
   }
 
-  getApiAuth(){
-    return this.api_root + this.config.getConfig("auth");
+  getApiAuth() {
+    return this.apiRoot + this.config.getConfig('auth');
   }
 }

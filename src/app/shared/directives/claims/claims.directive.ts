@@ -5,15 +5,15 @@ import {
   ViewContainerRef,
   OnInit,
   OnChanges,
-} from "@angular/core";
+} from '@angular/core';
 
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Directive({
-  selector: "[appClaims]",
+  selector: '[appClaims]',
 })
 export class ClaimsDirective implements OnInit, OnChanges {
-  @Input("hasClaims") hasClaims: string | Array<string>;
+  @Input('appClaims') hasClaims: string | Array<string>;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -41,7 +41,7 @@ export class ClaimsDirective implements OnInit, OnChanges {
   checkClaim(claims: string | Array<string>): boolean {
     const claimsLocalStoge = this.authService.getDataUserStorage()?.user?.claims;
 
-    return typeof claims === "string"
+    return typeof claims === 'string'
       ? this.verifyOneClaim(claims, claimsLocalStoge)
       : this.validClaimList(claims, claimsLocalStoge);
   }
@@ -72,12 +72,12 @@ export class ClaimsDirective implements OnInit, OnChanges {
       return {
         hasClaims: hasClaims.map(claim => Object.values(claim).toString()),
         userClaims
-      }
+      };
 
     } else {
       return {
         userClaims
-      }
+      };
     }
   }
 }

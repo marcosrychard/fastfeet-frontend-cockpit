@@ -5,45 +5,45 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-} from "@angular/core";
-import { TypeActionEnum } from "../../enums/type-action.enum";
+} from '@angular/core';
+import { TypeActionEnum } from '../../../core/enums/type-action.enum';
 
 @Component({
-  selector: "app-page-header-form",
-  templateUrl: "./page-header-form.component.html",
-  styleUrls: ["./page-header-form.component.scss"],
+  selector: 'app-page-header-form',
+  templateUrl: './page-header-form.component.html',
+  styleUrls: ['./page-header-form.component.scss'],
 })
 export class PageHeaderFormComponent implements OnInit, OnChanges {
   @Input() title: string;
-  @Input() link_back: string;
-  @Input() type_action: string;
-  @Output() onSubmit = new EventEmitter();
+  @Input() linkBack: string;
+  @Input() typeAction: string;
+  @Output() nameTypeAction = new EventEmitter();
 
   public name: any;
 
   constructor() {}
 
   ngOnChanges(): void {
-    this.name = this.buildName(this.type_action);
+    this.name = this.buildName(this.typeAction);
   }
 
   ngOnInit(): void {}
 
-  private buildName(type_action: string) {
-    if (type_action === TypeActionEnum.CREATE) {
+  private buildName(typeAction: string) {
+    if (typeAction === TypeActionEnum.CREATE) {
       return {
-        label: "CRIAR",
+        label: 'CRIAR',
         value: TypeActionEnum.CREATE,
       };
-    } else if (type_action === TypeActionEnum.UPDATE) {
+    } else if (typeAction === TypeActionEnum.UPDATE) {
       return {
-        label: "ATUALIZAR",
+        label: 'ATUALIZAR',
         value: TypeActionEnum.UPDATE,
       };
     }
   }
 
   public submit() {
-    this.onSubmit.emit(this.name.value);
+    this.nameTypeAction.emit(this.name.value);
   }
 }

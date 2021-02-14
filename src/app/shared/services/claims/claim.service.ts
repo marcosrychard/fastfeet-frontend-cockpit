@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ClaimService {
   constructor() { }
 
   checkHasClaim(claims: string | Array<string>): boolean {
     // get localStoge
-    const claimsLocalStoge = ["USER", "ADMIN"];;
+    const claimsLocalStoge = ['USER', 'ADMIN']; ;
 
-    return typeof claims === "string"
+    return typeof claims === 'string'
       ? this.verifyOneClaim(claims, claimsLocalStoge)
       : this.validClaimList(claims, claimsLocalStoge);
   }

@@ -1,0 +1,56 @@
+<main id="deliveryman-list" class="container mt-4">
+  <app-page-header-list [title]="'Gerenciando entregadores'" [label]="'Buscar por entregadores'" [iconName]="'add'"
+    [link]="'/cockpit/deliveryman/form'" [buttonName]="'CADASTRAR'">
+  </app-page-header-list>
+
+  <section class="row mb-5 table-custom">
+    <table mat-table [dataSource]="dataSource" class="w-100">
+
+      <!-- Nome -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element" data-label="Nome">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element" data-label="Email">
+          {{ element.email }}
+        </td>
+      </ng-container>
+
+      <!-- AÇÃO -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef class="text-right">
+          AÇÃO
+        </th>
+        <td mat-cell *matCellDef="let element" class="action" data-label="AÇÃO">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="action-button">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="goForm(element)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+
+            <ng-template appClaims [appClaims]="claims">
+              <button mat-menu-item (click)="openDialog()">
+                <mat-icon>delete</mat-icon>
+                <span>Deletar</span>
+              </button>
+            </ng-template>
+
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </section>
+</main>
