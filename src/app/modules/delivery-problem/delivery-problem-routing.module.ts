@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DeliveryProblemResolve } from 'src/app/shared/resolves/delivery-problem/delivery-problem.resolve';
+import { RouterModule, Routes } from '@angular/router';
 import { DeliveryProblemListComponent } from 'src/app/modules/delivery-problem/components/delivery-problem-list/delivery-problem-list.component';
 
 const DeliveryProblemRoutes: Routes = [
@@ -8,9 +7,7 @@ const DeliveryProblemRoutes: Routes = [
   {
     path: 'list',
     component: DeliveryProblemListComponent,
-    resolve: {
-      deliveryProblems: DeliveryProblemResolve,
-    },
+
     data: {
       roles: [],
       claims: [],

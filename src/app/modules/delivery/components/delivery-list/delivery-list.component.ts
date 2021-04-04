@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { displayedColumns } from '../../../../core/constants/delivery.constant';
-import { DeliveryDialogsService } from '../../../../shared/services/delivery/delivery-dialogs.service';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { DeliveryPaginatorResponseModel } from 'src/app/shared/models/response/delivery-paginator-response.model';
+import { DeliveryViewModel } from 'src/app/shared/models/view-models/delivery.view-model';
 import { ClaimService } from 'src/app/shared/services/claims/claim.service';
+import { DeliveryService } from 'src/app/shared/services/delivery/delivery.service';
 
 @Component({
   selector: 'app-delivery-list',
@@ -10,40 +12,53 @@ import { ClaimService } from 'src/app/shared/services/claims/claim.service';
   styleUrls: ['./delivery-list.component.scss'],
 })
 export class DeliveryListComponent implements OnInit {
-  displayedColumns = displayedColumns;
-  public dataSource = [];
-  public address = '';
-  public claims = 'ADMIN'; // localStorage ;
-  public result: any;
+  public pageSize = 10;
+  public pageIndex = 0;
+  public loading = true;
+  public totalItems: number;
+  public showFirstLastButtons = true;
+  public pageSizeOptions = [5, 10, 25];
+  public deliveryResponseModel: DeliveryPaginatorResponseModel;
+
+  private claims = 'ADMIN'; // localStorage ;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private claimService: ClaimService,
-    private dialogsService: DeliveryDialogsService
-  ) { }
+    private deliveryService: DeliveryService
+  ) {}
 
   ngOnInit(): void {
-    this.findAllDeliveries();
+    this.findAllDeliveries({ page: this.pageIndex, limit: this.pageSize });
     this.checkHasClaim();
   }
 
-  goForm(data: any) {
+  public handlePageEvent(event: PageEvent) {
+    this.totalItems = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+
+    this.findAllDeliveries({ page: this.pageIndex, limit: this.pageSize });
+  }
+
+  public goForm(data: DeliveryViewModel) {
     this.router.navigate(['/cockpit/delivery/form/' + data.id]);
   }
 
-  findAllDeliveries() {
-    this.dataSource = this.route.snapshot.data.deliveries?.results || [];
-    // this.dataSource = results.sort((a: any, b: any) => a.id - b.id) || [];
+  private findAllDeliveries(params = {}) {
+    this.deliveryService.findAllDeliveries(params).subscribe(
+      (res: DeliveryPaginatorResponseModel) => {
+        this.deliveryResponseModel = new DeliveryPaginatorResponseModel(res);
+        this.totalItems = +this.deliveryResponseModel.meta.totalItems;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
-  checkHasClaim() {
+  private checkHasClaim() {
     this.claimService.checkHasClaim(this.claims);
-  }
-
-  public openDialog() {
-    this.dialogsService
-      .confirm('Confirm Dialog', 'Are you sure you want to do this?')
-      .subscribe((res) => (this.result = res));
   }
 }

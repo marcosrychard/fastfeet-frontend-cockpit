@@ -43,7 +43,8 @@ export class PageHeaderFormComponent implements OnInit, OnChanges {
     }
   }
 
-  public submit() {
+  public onSubmit() {
+    console.log(this.name);
     this.nameTypeAction.emit(this.name.value);
   }
 }

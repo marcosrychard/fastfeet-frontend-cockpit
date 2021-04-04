@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvApiService } from '../http/env-api.service';
+import { RecipientPaginatorResponseModel } from '../../models/response/recipient-response.model';
+import { RecipientViewModel } from '../../models/view-models/recipient-view-model';
+import { RecipientRequestModel } from '../../models/request/recipient-request.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipientService {
-  constructor(private envApiService: EnvApiService, private http: HttpClient) { }
+  private url: string;
 
-  findAllRecipients(params = {}) {
-    return this.http.get(this.envApiService.getApiRecipient(), { params });
+  constructor(private envApiService: EnvApiService, private http: HttpClient) {
+    this.url = this.envApiService.getApiRecipient();
   }
 
-  findByRecipientId(id: string) {
-    return this.http.get(this.envApiService.getApiRecipient() + '/' + id);
+  public findAllRecipients(params = {}) {
+    return this.http.get<RecipientPaginatorResponseModel>(this.url, { params });
   }
 
-  createRecipient(data: any) {
-    return this.http.post(this.envApiService.getApiRecipient(), data);
+  public findByRecipientId(id: string) {
+    return this.http.get<RecipientViewModel>(`${this.url}/${id}`);
   }
 
-  updateRecipient(data: any) {
-    return this.http.put(
-      this.envApiService.getApiRecipient() + '/' + data.id,
-      data
-    );
+  public createRecipient(data: RecipientRequestModel) {
+    return this.http.post<RecipientViewModel>(this.url, data);
+  }
+
+  public updateRecipient(data: RecipientRequestModel) {
+    return this.http.put<RecipientViewModel>(`${this.url}/${data.id}`, data);
   }
 }

@@ -12,11 +12,11 @@ describe('DeliverymanListComponent', () => {
 
   beforeEach(() => {
     const activatedRouteStub = () => ({
-      snapshot: { data: { deliverymans: {}, claims: {} } }
+      snapshot: { data: { deliverymans: {}, claims: {} } },
     });
-    const routerStub = () => ({ navigate: array => ({}) });
+    const routerStub = () => ({ navigate: (array) => ({}) });
     const deliverymanDialogsServiceStub = () => ({
-      confirm: (string, string1) => ({ subscribe: f => f({}) })
+      confirm: (string, string1) => ({ subscribe: (f) => f({}) }),
     });
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -26,9 +26,9 @@ describe('DeliverymanListComponent', () => {
         { provide: Router, useFactory: routerStub },
         {
           provide: DeliverymanDialogsService,
-          useFactory: deliverymanDialogsServiceStub
-        }
-      ]
+          useFactory: deliverymanDialogsServiceStub,
+        },
+      ],
     });
     fixture = TestBed.createComponent(DeliverymanListComponent);
     component = fixture.componentInstance;
@@ -43,7 +43,7 @@ describe('DeliverymanListComponent', () => {
   });
 
   it(`dataSource has default value`, () => {
-    expect(component.dataSource).toEqual([]);
+    expect(component.deliveryman).toEqual([]);
   });
 
   it(`claims has default value`, () => {

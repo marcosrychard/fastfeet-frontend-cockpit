@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { RecipientListComponent } from 'src/app/modules/recipient/components/recipient-list/recipient-list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { RecipientFormComponent } from 'src/app/modules/recipient/components/recipient-form/recipient-form.component';
-import { RecipientResolve } from 'src/app/shared/resolves/recipient/recipient.resolve';
+import { RecipientListComponent } from 'src/app/modules/recipient/components/recipient-list/recipient-list.component';
 
 const RecipientRoutes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   {
     path: 'list',
     component: RecipientListComponent,
-    resolve: {
-      recipients: RecipientResolve,
-    },
+
     data: {
       roles: [],
       claims: [],
@@ -40,4 +37,4 @@ const RecipientRoutes: Routes = [
   imports: [RouterModule.forChild(RecipientRoutes)],
   exports: [RouterModule],
 })
-export class RecipientRoutingModule { }
+export class RecipientRoutingModule {}

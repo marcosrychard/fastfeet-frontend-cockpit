@@ -1,20 +1,19 @@
 ::ng-deep {
-  #deliveryman-list {
-    .search {
-      height: 40px;
-    }
+  .mat-menu-content {
+    width: 150px !important;
+  }
 
-    .action {
-      cursor: pointer;
-      text-align: center;
-      color: #c6c6c6;
-      position: relative;
-    }
+  .mat-menu-item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
 
-    .action-button {
-      position: absolute;
-      top: 9px;
-      right: 24px;
-    } 
+#deliveryman-list {
+  .action {
+    cursor: pointer;
+    text-align: center;
+    color: #c6c6c6;
+    position: relative;
   }
 }

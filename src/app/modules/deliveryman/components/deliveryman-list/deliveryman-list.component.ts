@@ -1,44 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { displayedColumns } from '../../../../core/constants/deliveryman.constant';
-import { DeliverymanDialogsService } from '../../../../shared/services/deliveryman/deliveryman-dialogs.service';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { DeliveryManPaginatorResponseModel } from 'src/app/shared/models/response/deliveryman-paginator-response.model';
+import { DeliveryManViewModel } from 'src/app/shared/models/view-models/deliveryman.view-model';
+import { ClaimService } from 'src/app/shared/services/claims/claim.service';
+import { DeliverymanService } from 'src/app/shared/services/deliveryman/deliveryman.service';
 @Component({
   selector: 'app-deliveryman-list',
   templateUrl: './deliveryman-list.component.html',
   styleUrls: ['./deliveryman-list.component.scss'],
 })
 export class DeliverymanListComponent implements OnInit {
-  public displayedColumns = displayedColumns;
-  public dataSource = [];
-  public result: any;
-  public claims = [];
+  public pageSize = 10;
+  public pageIndex = 0;
+  public loading = true;
+  public totalItems: number;
+  public showFirstLastButtons = true;
+  public pageSizeOptions = [5, 10, 25];
+  public deliveryManResponseModel: DeliveryManPaginatorResponseModel;
+
+  private claims = [];
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private dialogsService: DeliverymanDialogsService
-  ) { }
+    private claimService: ClaimService,
+    private deliverymanService: DeliverymanService
+  ) {}
 
   ngOnInit(): void {
-    this.findAllDeliveries();
-    this.claims = this.findClaims();
+    this.findAllDeliveryman({ page: this.pageIndex, limit: this.pageSize });
+    this.checkHasClaim();
   }
 
-  public goForm(data: any) {
+  public goForm(data: DeliveryManViewModel) {
     this.router.navigate(['/cockpit/deliveryman/form/' + data.id]);
   }
 
-  private findAllDeliveries(): void {
-    this.dataSource = this.route.snapshot.data.deliverymans?.results || [];
+  public handlePageEvent(event: PageEvent) {
+    this.totalItems = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+
+    this.findAllDeliveryman({ page: this.pageIndex, limit: this.pageSize });
   }
 
-  private findClaims() {
-    return this.route.snapshot.data.claims;
+  private findAllDeliveryman(params: {}): void {
+    this.deliverymanService.findAllDeliveryman(params).subscribe(
+      (res: DeliveryManPaginatorResponseModel) => {
+        this.deliveryManResponseModel = res;
+        this.totalItems = this.deliveryManResponseModel.meta.totalItems;
+        this.loading = false;
+      },
+      (error) => {}
+    );
   }
 
-  public openDialog() {
-    this.dialogsService
-      .confirm('Confirm Dialog', 'Are you sure you want to do this?')
-      .subscribe((res) => (this.result = res));
+  private checkHasClaim() {
+    this.claimService.checkHasClaim(this.claims);
   }
 }

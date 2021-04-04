@@ -8,7 +8,7 @@ export class EnvConfigService {
   private config = null;
   private env = null;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   public getConfig(key: any) {
     if (!Array.isArray(key)) {
@@ -17,7 +17,7 @@ export class EnvConfigService {
 
     let res = this.config;
 
-    key.forEach(k => (res = res[k]));
+    key.forEach((k) => (res = res[k]));
 
     return res;
   }
@@ -31,28 +31,21 @@ export class EnvConfigService {
       this.httpClient
         .get('./assets/env/env.json')
         .subscribe((envResponse: any) => {
-          this.env = envResponse;
+          this.env = envResponse.env;
 
-          let env = null;
+          if (this.env) {
+            this.httpClient.get(`./assets/env/env.${this.env}.json`).subscribe(
+              (responseData) => {
+                this.config = responseData;
 
-          switch (envResponse.env) {
-            case 'production': env = 'production'; break;
-            case 'development': env = 'development'; break;
-            case 'default': env = null; break;
-          }
-
-          if (env) {
-            this.httpClient.get(`./assets/env/env.${env}.json`).pipe(
-              catchError(error => {
+                resolve(true);
+              },
+              (error) => {
                 console.log('Configuration file "env.json" could not be read');
                 resolve(true);
                 return throwError(error || 'Server error');
-              })
-            ).subscribe(responseData => {
-              this.config = responseData;
-
-              resolve(true);
-            });
+              }
+            );
           } else {
             console.error('Env config file "env.json" is not valid');
             resolve(true);

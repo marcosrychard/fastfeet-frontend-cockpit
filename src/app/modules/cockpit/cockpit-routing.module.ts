@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CockpitComponent } from './cockpit.component';
-import { HomeComponent } from '../../core/layout/home/home.component';
+import { HomeComponent } from '../auth/components/layout/home/home.component';
 import { CockpitGuard } from '../../shared/guards/cockpit/cockpit.guard';
 
 const CockpitRoutes: Routes = [

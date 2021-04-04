@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DeliverymanFacade } from '../../store/deliveryman.facade';
 import { TypeActionEnum } from 'src/app/core/enums/type-action.enum';
-import { ActivatedRoute } from '@angular/router';
+import { DeliverymanRequestModel } from 'src/app/shared/models/request/deliveryman-request.model';
+import { DeliveryManViewModel } from 'src/app/shared/models/view-models/deliveryman.view-model';
+import { DeliverymanService } from 'src/app/shared/services/deliveryman/deliveryman.service';
 
 @Component({
   selector: 'app-deliveryman-form',
@@ -19,18 +21,70 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private deliverymanFacade: DeliverymanFacade
-  ) { }
+    private deliverymanService: DeliverymanService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.distachLoadById(this.id);
+    this.findDeliverymanById(this.id);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  public onSubmit(event: string) {
+    if (this.deliverymanForm.valid) {
+      const data = new DeliverymanRequestModel(this.deliverymanForm.value);
+
+      if (event === TypeActionEnum.CREATE) {
+        this.createDeliveryman(data);
+      } else {
+        this.updateDeliveryman(data);
+      }
+
+      this.goList();
+    }
+  }
+
+  public goList() {
+    this.router.navigate(['/cockpit/deliveryman/list']);
+  }
+
+  private createDeliveryman(data: DeliverymanRequestModel) {
+    this.deliverymanService
+      .createDeliveryman(data)
+      .subscribe((res: DeliveryManViewModel) => {
+        console.log('createDeliveryman', res);
+      });
+  }
+
+  private updateDeliveryman(data: DeliverymanRequestModel) {
+    this.deliverymanService
+      .updateDeliveryman(data)
+      .subscribe((res: DeliveryManViewModel) => {
+        console.log('updateDeliveryman', res);
+      });
+  }
+
+  private findDeliverymanById(id: string) {
+    this.subscriptions.add(
+      this.deliverymanService.findByDeliverymanId(id).subscribe(
+        (res: DeliverymanRequestModel) => {
+          if (res) {
+            this.deliverymanForm.setValue(new DeliverymanRequestModel(res));
+            this.typeAction = TypeActionEnum.UPDATE;
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.loading = false;
+        }
+      )
+    );
   }
 
   private buildForm() {
@@ -39,61 +93,5 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       email: ['', Validators.required],
     });
-  }
-
-  public onSubmit(event: string) {
-    if (this.deliverymanForm.valid) {
-      if (event === TypeActionEnum.CREATE) {
-        this.create(this.deliverymanForm.value);
-      } else if (event === TypeActionEnum.UPDATE) {
-        this.update(this.deliverymanForm.value);
-      }
-    }
-  }
-
-  preparetObjToGet(data: any) {
-    return {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-    };
-  }
-
-  public update(data: any) {
-    this.deliverymanFacade.update(data);
-  }
-
-  public create(data: any) {
-    this.deliverymanFacade.create(this.preparetObjTosave(data));
-  }
-
-  distachLoadById(id: number) {
-    if (id) {
-      this.deliverymanFacade.loadById(id);
-      this.findDeliveryById();
-    }
-  }
-
-  preparetObjTosave(data: any) {
-    return {
-      name: data.name,
-      email: data.email
-    };
-  }
-
-
-  findDeliveryById() {
-    this.subscriptions.add(
-      this.deliverymanFacade.datas.subscribe((res) => {
-        if (res) {
-          this.setValueForm(res);
-        }
-      })
-    );
-  }
-
-  setValueForm(res: any) {
-    this.deliverymanForm.setValue(this.preparetObjToGet(res));
-    this.typeAction = TypeActionEnum.UPDATE;
   }
 }

@@ -10,23 +10,22 @@ export class EnvApiService {
     this.apiRoot = config.getConfig('api_root');
   }
 
-  getApiDelivery() {
+  public getApiDelivery(): string {
     return this.apiRoot + this.config.getConfig('deliveries');
   }
 
-  getApiDeliveryman() {
+  public getApiDeliveryman(): string {
     return this.apiRoot + this.config.getConfig('deliverymans');
   }
 
-  getApiRecipient() {
+  public getApiRecipient(): string {
     return this.apiRoot + this.config.getConfig('recipients');
   }
-
-  getApiDeliveryProblem() {
+  public getApiDeliveryProblem(): string {
     return this.apiRoot + this.config.getConfig('delivery_problem');
   }
 
-  getApiAuth() {
+  public getApiAuth(): string {
     return this.apiRoot + this.config.getConfig('auth');
   }
 }

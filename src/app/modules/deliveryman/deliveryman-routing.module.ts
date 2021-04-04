@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DeliverymanListComponent } from 'src/app/modules/deliveryman/components/deliveryman-list/deliveryman-list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { DeliverymanFormComponent } from 'src/app/modules/deliveryman/components/deliveryman-form/deliveryman-form.component';
-import { DeliverymanResolve } from 'src/app/shared/resolves/deliveryman/deliveryman.resolve';
+import { DeliverymanListComponent } from 'src/app/modules/deliveryman/components/deliveryman-list/deliveryman-list.component';
 import { deliverymanClaimsHash } from '../../core/claims-hash/deliveryman-claims.hash';
 
 const DeliverymanRoutes: Routes = [
@@ -10,9 +9,6 @@ const DeliverymanRoutes: Routes = [
   {
     path: 'list',
     component: DeliverymanListComponent,
-    resolve: {
-      deliverymans: DeliverymanResolve,
-    },
     data: {
       roles: [],
       claims: deliverymanClaimsHash,
@@ -41,4 +37,4 @@ const DeliverymanRoutes: Routes = [
   imports: [RouterModule.forChild(DeliverymanRoutes)],
   exports: [RouterModule],
 })
-export class DeliverymanRoutingModule { }
+export class DeliverymanRoutingModule {}

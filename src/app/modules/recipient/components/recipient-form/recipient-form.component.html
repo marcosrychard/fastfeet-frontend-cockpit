@@ -1,7 +1,11 @@
 <section class="container">
   <header>
-    <app-page-header-form [title]="'Cadastro de destinatário'" [linkBack]="'/cockpit/recipient/list'"
-      [typeAction]="typeAction" (onSubmit)="onSubmit($event)">
+    <app-page-header-form
+      [title]="'Cadastro de destinatário'"
+      [linkBack]="'/cockpit/recipient/list'"
+      [typeAction]="typeAction"
+      (nameTypeAction)="onSubmit($event)"
+    >
     </app-page-header-form>
   </header>
   <main>
@@ -23,7 +27,7 @@
           <!-- Número -->
           <mat-form-field appearance="outline" class="col-12 col-md-4">
             <mat-label>Número</mat-label>
-            <input matInput formControlName="number" />
+            <input matInput formControlName="address_number" />
           </mat-form-field>
 
           <!-- Complemento -->

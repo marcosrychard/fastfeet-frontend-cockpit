@@ -1,16 +1,17 @@
-<main class="col-12 px-0">
-  <h4 class="title col-12 mb-4 px-0">{{ title }}</h4>
-  <form autocomplete="off" class="row align-items-center search">
-    <mat-form-field class="col-6 px-0">
-      <mat-label>{{ label }}</mat-label>
-      <mat-icon matPrefix class="mr-2">search</mat-icon>
-      <input matInput autocomplete="off" />
-    </mat-form-field>
+<header id="page-header-list" class="mb-2">
+  <h4 class="mb-4 row ">{{ title }}</h4>
+  <form autocomplete="off">
+    <article class="row">
+      <section class="col-6 form-group has-search px-0">
+        <mat-icon class="form-control-feedback">search</mat-icon>
+        <input type="text" class="form-control" [placeholder]="label">
+      </section>
 
-    <section class="button col-6 px-0 text-right">
-      <button mat-raised-button class="button-primary" [routerLink]="link">
-        <mat-icon>{{ iconName }}</mat-icon> {{ buttonName }}
-      </button>
-    </section>
+      <section class="col-6 text-right pr-4">
+        <button mat-raised-button class="button-primary" [routerLink]="link">
+          <mat-icon>{{ iconName }}</mat-icon> {{ buttonName }}
+        </button>
+      </section>
+    </article>
   </form>
-</main>
+</header>

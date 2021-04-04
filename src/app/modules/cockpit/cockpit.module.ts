@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CockpitComponent } from './cockpit.component';
-import { DefaultModule } from '../../shared/modules/default.module';
-import { ToolbarModule } from '../../core/layout/toolbar/toolbar.module';
+import { DefaultModule } from '../../core/modules/default.module';
+import { ToolbarModule } from '../auth/components/layout/toolbar/toolbar.module';
 import { CockpitRoutingModule } from './cockpit-routing.module';
-import { HomeComponent } from '../../core/layout/home/home.component';
+import { HomeComponent } from '../auth/components/layout/home/home.component';
 
 @NgModule({
   declarations: [CockpitComponent, HomeComponent],

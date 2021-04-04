@@ -5,6 +5,6 @@ export interface User {
     email: string;
     roles: [];
     claims: [];
-  },
+  };
   access_token: any;
 }

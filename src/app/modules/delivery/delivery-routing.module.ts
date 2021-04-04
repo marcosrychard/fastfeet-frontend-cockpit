@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DeliveryListComponent } from 'src/app/modules/delivery/components/delivery-list/delivery-list.component';
+import { RouterModule, Routes } from '@angular/router';
 import { DeliveryFormComponent } from 'src/app/modules/delivery/components/delivery-form/delivery-form.component';
-import { DeliveryResolve } from 'src/app/shared/resolves/delivery/delivery.resolve';
+import { DeliveryListComponent } from 'src/app/modules/delivery/components/delivery-list/delivery-list.component';
 
 const DeliveryRoutes: Routes = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
   {
     path: 'list',
     component: DeliveryListComponent,
-    resolve: {
-      deliveries: DeliveryResolve,
-    },
     data: {
       roles: [],
       claims: [],
@@ -40,4 +36,4 @@ const DeliveryRoutes: Routes = [
   imports: [RouterModule.forChild(DeliveryRoutes)],
   exports: [RouterModule],
 })
-export class DeliveryRoutingModule { }
+export class DeliveryRoutingModule {}

@@ -1,7 +1,11 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
@@ -9,7 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EnvConfigService } from './shared/services/http/env-config.service';
-import { DefaultModule } from './shared/modules/default.module';
+import { DefaultModule } from './core/modules/default.module';
 import { IconService } from './shared/services/commons/icon.service';
 import { AppStoreModule } from './core/store';
 import { JwtInterceptor } from './shared/helpers/jwt-interceptor/jwt.interceptor.helpers';
@@ -44,13 +48,14 @@ export function InitEnvConfigFactory(config: EnvConfigService) {
   exports: [DefaultModule],
   providers: [
     {
-      provide: APP_INITIALIZER, useFactory: InitEnvConfigFactory,
+      provide: APP_INITIALIZER,
+      useFactory: InitEnvConfigFactory,
       deps: [EnvConfigService, IconService],
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-cockpit',
   template: `<section>
     <app-toolbar></app-toolbar>
-    <router-outlet></router-outlet>
+    <div class="container"><router-outlet></router-outlet></div>
   </section>`,
 })
 export class CockpitComponent implements OnInit {

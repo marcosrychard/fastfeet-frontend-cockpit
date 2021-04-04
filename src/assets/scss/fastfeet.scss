@@ -11,7 +11,7 @@
   .button-secondary {
     width: 142px;
     height: 36px;
-    background-color: #CCCCCC;
+    background-color: #cccccc;
     border-radius: 4px;
     text-align: center;
     color: #fff;
@@ -31,61 +31,41 @@
     letter-spacing: 0;
     font-weight: 500;
   }
+
   .active {
     background-color: #ddd;
   }
 
   .table-custom {
-    .mat-table {
-      background-color: transparent;
+    table {
+      border-spacing: 0 12px;
       border-collapse: separate;
-      border-spacing: 0 1.5rem;
-    }
 
-    .mat-header-cell {
-      background-color: #f5f5f5;
-      border: none;
-      font-size: 16px;
-      color: #444;
-      font-weight: 600;
-    }
-
-    .mat-header-row {
-      height: 0;
-      transform: translateY(70%);
-    }
-
-    .mat-cell {
-      height: 57px;
-      background-color: #fff;
-    }
-  }
-
-  @media screen and (max-width: 730px) {
-    .mat-table {
-      .mat-header-cell {
-        clip: rect(0 0 0 0);
-        position: absolute;
-        font-weight: bold;
+      thead {
+        th {
+          padding-top: 0;
+          padding-bottom: 0;
+        }
       }
 
-      .mat-cell {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 15px;
-        height: 57px;
-        color: #444;
-        font-weight: 600;
-      }
+      tbody {
+        tr {
+          background-color: #fff;
 
-      .mat-cell:before {
-        content: attr(data-label);
-        text-transform: uppercase;
-      }
+          td {
+            vertical-align: middle;
+          }
 
-      .mat-cell:first-child {
-        padding-left: 15px;
+          td:first-child {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+          }
+
+          td:last-child {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+          }
+        }
       }
     }
   }

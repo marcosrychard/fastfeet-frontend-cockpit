@@ -1,27 +1,32 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvApiService } from '../http/env-api.service';
+import { Injectable } from '@angular/core';
 import { DeliveryRequestModel } from '../../models/request/delivery-request.model';
+import { DeliveryPaginatorResponseModel } from '../../models/response/delivery-paginator-response.model';
+import { DeliveryViewModel } from '../../models/view-models/delivery.view-model';
+import { EnvApiService } from '../http/env-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeliveryService {
-  constructor(private envApiService: EnvApiService, private http: HttpClient) { }
-
-  findAllDeliveries(params = {}) {
-    return this.http.get(this.envApiService.getApiDelivery(), { params });
+  private url: string;
+  constructor(private envApiService: EnvApiService, private http: HttpClient) {
+    this.url = this.envApiService.getApiDelivery();
   }
 
-  findByDeliveryId(id: string) {
-    return this.http.get(this.envApiService.getApiDelivery() + '/' + id);
+  public findAllDeliveries(params = {}) {
+    return this.http.get<DeliveryPaginatorResponseModel>(this.url, { params });
   }
 
-  createDelivery(data: DeliveryRequestModel) {
-    return this.http.post<DeliveryRequestModel>(this.envApiService.getApiDelivery(), data);
+  public findByDeliveryId(id: string) {
+    return this.http.get<DeliveryViewModel>(`${this.url}/${id}`);
   }
 
-  updateDelivery(data: DeliveryRequestModel) {
-    return this.http.put<DeliveryRequestModel>(this.envApiService.getApiDelivery() + '/' + data.id, data);
+  public createDelivery(data: DeliveryRequestModel) {
+    return this.http.post<DeliveryViewModel>(this.url, data);
+  }
+
+  public updateDelivery(data: DeliveryRequestModel) {
+    return this.http.put<DeliveryViewModel>(`${this.url}/${data.id}`, data);
   }
 }

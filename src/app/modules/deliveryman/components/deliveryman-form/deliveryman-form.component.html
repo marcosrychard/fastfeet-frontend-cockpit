@@ -1,7 +1,11 @@
 <section class="container">
   <header>
-    <app-page-header-form [title]="'Edição de entregadores'" [linkBack]="'/cockpit/deliveryman/list'"
-      [typeAction]="typeAction" (onSubmit)="onSubmit($event)">
+    <app-page-header-form
+      [title]="'Edição de entregadores'"
+      [linkBack]="'/cockpit/deliveryman/list'"
+      [typeAction]="typeAction"
+      (nameTypeAction)="onSubmit($event)"
+    >
     </app-page-header-form>
   </header>
   <main>
