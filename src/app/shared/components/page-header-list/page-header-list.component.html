@@ -1,13 +1,13 @@
 <header id="page-header-list" class="mb-2">
-  <h4 class="mb-4 row ">{{ title }}</h4>
+  <h4 class="mb-4 row">{{ title }}</h4>
   <form autocomplete="off">
     <article class="row">
       <section class="col-6 form-group has-search px-0">
         <mat-icon class="form-control-feedback">search</mat-icon>
-        <input type="text" class="form-control" [placeholder]="label">
+        <input type="text" class="form-control" [placeholder]="label" />
       </section>
 
-      <section class="col-6 text-right pr-4">
+      <section class="col-6 text-right pr-4" *ngIf="isShowButton">
         <button mat-raised-button class="button-primary" [routerLink]="link">
           <mat-icon>{{ iconName }}</mat-icon> {{ buttonName }}
         </button>

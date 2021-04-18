@@ -1,51 +1,59 @@
-<main id="delivery-problem" class="container mt-4">
-  <h3>Problemas na entrega</h3>
+<article id="delivery-problem" class="container mt-4">
+  <h3></h3>
+  <app-page-header-list
+    [title]="'Problemas na entrega'"
+    [label]="'Buscar por problemas'"
+    [isShowButton]="false"
+  >
+  </app-page-header-list>
 
-  <section class="row mb-5 table-custom">
-    <table mat-table [dataSource]="dataSource" class="w-100">
+  <section class="row table-custom table-responsive" *ngIf="!loading">
+    <table class="table table-borderless table-custom mb-0 pb-0">
+      <thead>
+        <tr>
+          <th scope="col">Encomenda</th>
+          <th scope="col">Problema</th>
+          <th scope="col" class="text-center">AÇÃO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deliveryProblem of deliveryProblem.data">
+          <td>{{ deliveryProblem.delivery.product }}</td>
+          <td>{{ deliveryProblem.description }}</td>
 
-      <!-- ENCOMENDA -->
-      <ng-container matColumnDef="delivery_id">
-        <th mat-header-cell *matHeaderCellDef>ENCOMENDA</th>
-        <td mat-cell *matCellDef="let element" data-label="Encomenda">
-          #{{ element.delivery_id }}
-        </td>
-      </ng-container>
-
-      <!-- DESCRIÇÃO -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>DESCRIÇÃO</th>
-        <td mat-cell *matCellDef="let element" data-label="Descrição">
-          {{ element.description }}
-        </td>
-      </ng-container>
-
-      <!-- AÇÃO -->
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef class="text-center">
-          AÇÃO
-        </th>
-        <td mat-cell *matCellDef="let element" class="action" data-label="AÇÃO">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_horiz</mat-icon>
-          </button>
-
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>remove_red_eye</mat-icon>
-              <span>Visualizar</span>
+          <td class="p-0 action text-center">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
             </button>
 
-            <button mat-menu-item>
-              <mat-icon>delete</mat-icon>
-              <span>Cancelar encomenda</span>
-            </button>
-          </mat-menu>
-        </td>
-      </ng-container>
+            <mat-menu #menu="matMenu" class="px-2">
+              <button mat-menu-item>
+                <mat-icon color="primary">remove_red_eye</mat-icon>
+                <span>Visualizar</span>
+              </button>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              <mat-divider></mat-divider>
+
+              <button mat-menu-item>
+                <mat-icon color="accent">edit</mat-icon>
+                <span>Cancelar encomenda</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </section>
-</main>
+
+  <section class="row pb-3">
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="totalItems"
+      [pageSize]="pageSize"
+      [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+    >
+    </mat-paginator>
+  </section>
+</article>

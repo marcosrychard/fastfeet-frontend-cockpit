@@ -1,22 +1,17 @@
-import { TestBed } from '@angular/core/testing';
 import {
-  HttpClientTestingModule,
-  HttpTestingController
+  HttpClientTestingModule
 } from '@angular/common/http/testing';
-import { EnvApiService } from '../http/env-api.service';
+import { TestBed } from '@angular/core/testing';
 import { RecipientService } from './recipient.service';
+
 
 describe('RecipientService', () => {
   let service: RecipientService;
 
   beforeEach(() => {
-    const envApiServiceStub = () => ({ getApiRecipient: () => ({}) });
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        RecipientService,
-        { provide: EnvApiService, useFactory: envApiServiceStub }
-      ]
+      providers: [RecipientService],
     });
     service = TestBed.inject(RecipientService);
   });

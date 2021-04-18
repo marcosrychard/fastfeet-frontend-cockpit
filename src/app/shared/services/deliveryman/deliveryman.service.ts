@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { DeliverymanRequestModel } from '../../models/request/deliveryman-request.model';
 import { DeliveryManPaginatorResponseModel } from '../../models/response/deliveryman-paginator-response.model';
 import { DeliveryManViewModel } from '../../models/view-models/deliveryman.view-model';
-import { EnvApiService } from '../http/env-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,8 @@ import { EnvApiService } from '../http/env-api.service';
 export class DeliverymanService {
   private url: string;
 
-  constructor(private envApiService: EnvApiService, private http: HttpClient) {
-    this.url = this.envApiService.getApiDeliveryman();
+  constructor(private http: HttpClient) {
+    this.url = environment.BASE_URL + environment.DELIVERYMANS;
   }
 
   public findAllDeliveryman(params?: any) {

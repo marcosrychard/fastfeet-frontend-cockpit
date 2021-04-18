@@ -1,23 +1,22 @@
-import { TestBed } from '@angular/core/testing';
 import {
-  HttpClientTestingModule,
-  HttpTestingController
+  HttpClientTestingModule
 } from '@angular/common/http/testing';
-import { EnvApiService } from 'src/app/shared/services/http/env-api.service';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    const envApiServiceStub = () => ({ getApiAuth: () => ({}) });
+
     const routerStub = () => ({ navigate: array => ({}) });
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
         AuthService,
-        { provide: EnvApiService, useFactory: envApiServiceStub },
+     
         { provide: Router, useFactory: routerStub }
       ]
     });

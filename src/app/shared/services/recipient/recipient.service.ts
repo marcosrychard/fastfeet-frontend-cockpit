@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { EnvApiService } from '../http/env-api.service';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { RecipientRequestModel } from '../../models/request/recipient-request.model';
 import { RecipientPaginatorResponseModel } from '../../models/response/recipient-response.model';
 import { RecipientViewModel } from '../../models/view-models/recipient-view-model';
-import { RecipientRequestModel } from '../../models/request/recipient-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,8 @@ import { RecipientRequestModel } from '../../models/request/recipient-request.mo
 export class RecipientService {
   private url: string;
 
-  constructor(private envApiService: EnvApiService, private http: HttpClient) {
-    this.url = this.envApiService.getApiRecipient();
+  constructor(private http: HttpClient) {
+    this.url = environment.BASE_URL + environment.DELIVERYMANS;
   }
 
   public findAllRecipients(params = {}) {

@@ -1,9 +1,18 @@
 ::ng-deep {
-  #delivery-problem {
-    .action {
-      cursor: pointer;
-      text-align: center;
-      color: #c6c6c6;
-    }
+  .mat-menu-content {
+    width: 200px !important;
+  }
+
+  .mat-menu-item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+#delivery-problem {
+  .action {
+    cursor: pointer;
+    text-align: center;
+    color: #c6c6c6;
   }
 }

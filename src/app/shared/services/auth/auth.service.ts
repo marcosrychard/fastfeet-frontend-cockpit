@@ -1,41 +1,41 @@
-import { Injectable } from '@angular/core';
-import { EnvApiService } from 'src/app/shared/services/http/env-api.service';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { LocalStorageUtils } from 'src/app/shared/helpers/localstorage.helpers';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private url: string;
 
-
-  constructor(
-    private httpClient: HttpClient,
-    private envApiService: EnvApiService,
-    private router: Router
-  ) { }
-
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.url = environment.BASE_URL + environment.DELIVERYMANS;
+  }
 
   public signin(data: any) {
-    return this.httpClient.post(this.envApiService.getApiAuth() + '/sign-in', data)
+    return this.httpClient
+      .post(this.url + '/sign-in', data)
       .pipe(
-        tap((user) => this.router.navigate(["/cockpit"]) && this.setDataUsertorage(user))
+        tap(
+          (user) =>
+            this.router.navigate(['/cockpit']) && this.setDataUsertorage(user)
+        )
       );
   }
 
   public logout() {
-    LocalStorageUtils.removeDataUserStorage()
-    this.router.navigate(["/"])
+    LocalStorageUtils.removeDataUserStorage();
+    this.router.navigate(['/']);
   }
 
   public getDataUserStorage() {
-    return LocalStorageUtils.getDataUserStorage()
+    return LocalStorageUtils.getDataUserStorage();
   }
 
   public setDataUsertorage(user: any) {
-    LocalStorageUtils.setDataUsertorage(user)
+    LocalStorageUtils.setDataUsertorage(user);
   }
 }
-

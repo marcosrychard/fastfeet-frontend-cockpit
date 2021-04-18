@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-page-header-list',
   templateUrl: './page-header-list.component.html',
   styleUrls: ['./page-header-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageHeaderListComponent implements OnInit {
   @Input() title: string;
@@ -12,8 +17,9 @@ export class PageHeaderListComponent implements OnInit {
   @Input() label: string;
   @Input() iconName: string;
   @Input() buttonName: string;
+  @Input() isShowButton = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

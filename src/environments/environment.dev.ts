@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  ENV: 'production',
+  production: false,
+  ENV: 'development',
   BASE_URL: 'https://fastfeet_service.dev:4000/api/',
   AUTH: 'auth',
   DELIVERIES: 'deliveries',

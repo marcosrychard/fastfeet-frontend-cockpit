@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { DeliveryPaginatorResponseModel } from 'src/app/shared/models/response/delivery-paginator-response.model';
 import { DeliveryViewModel } from 'src/app/shared/models/view-models/delivery.view-model';
 import { ClaimService } from 'src/app/shared/services/claims/claim.service';
 import { DeliveryService } from 'src/app/shared/services/delivery/delivery.service';
+import { DeliveryDataViewsModalComponent } from '../delivery-data-views-modal/delivery-data-views-modal.component';
 
 @Component({
   selector: 'app-delivery-list',
@@ -25,12 +27,17 @@ export class DeliveryListComponent implements OnInit {
   constructor(
     private router: Router,
     private claimService: ClaimService,
-    private deliveryService: DeliveryService
+    private deliveryService: DeliveryService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.findAllDeliveries({ page: this.pageIndex, limit: this.pageSize });
     this.checkHasClaim();
+  }
+
+  openDialog() {
+    this.dialog.open(DeliveryDataViewsModalComponent);
   }
 
   public handlePageEvent(event: PageEvent) {
