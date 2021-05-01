@@ -1,7 +1,6 @@
 import { environment } from 'src/environments/environment';
 
 export abstract class LocalStorageUtils {
-
   public static getDataUserStorage() {
     return JSON.parse(localStorage.getItem(environment.DATA_USER));
   }

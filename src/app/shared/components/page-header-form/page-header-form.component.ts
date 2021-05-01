@@ -1,10 +1,10 @@
 import {
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { TypeActionEnum } from '../../../core/enums/type-action.enum';
 

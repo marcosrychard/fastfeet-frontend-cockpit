@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpRequest } from '@angular/common/http';
-import { HttpHandler } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ErrorInterceptor } from './error.interceptor.helpers';
 
 describe('ErrorInterceptor', () => {
@@ -10,14 +8,14 @@ describe('ErrorInterceptor', () => {
 
   beforeEach(() => {
     const toastrServiceStub = () => ({ error: (string, string1) => ({}) });
-    const routerStub = () => ({ navigateByUrl: string => ({}) });
-    
+    const routerStub = () => ({ navigateByUrl: (string) => ({}) });
+
     TestBed.configureTestingModule({
       providers: [
         ErrorInterceptor,
         { provide: ToastrService, useFactory: toastrServiceStub },
-        { provide: Router, useFactory: routerStub }
-      ]
+        { provide: Router, useFactory: routerStub },
+      ],
     });
     service = TestBed.inject(ErrorInterceptor);
   });

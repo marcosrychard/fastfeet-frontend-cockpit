@@ -12,18 +12,16 @@ export class AuthService {
   private url: string;
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.url = environment.BASE_URL + environment.DELIVERYMANS;
+    this.url = environment.BASE_URL + environment.AUTH;
   }
 
   public signin(data: any) {
-    return this.httpClient
-      .post(this.url + '/sign-in', data)
-      .pipe(
-        tap(
-          (user) =>
-            this.router.navigate(['/cockpit']) && this.setDataUsertorage(user)
-        )
-      );
+    return this.httpClient.post(this.url + '/signin', data).pipe(
+      tap((user) => {
+        this.router.navigate(['/panel']);
+        this.setDataUsertorage(user);
+      })
+    );
   }
 
   public logout() {

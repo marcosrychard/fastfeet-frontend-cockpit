@@ -9,7 +9,7 @@
     "build": "ng build",
     "test": "ng test",
     "test:coverage": "ng test --watch --code-coverage",
-    "test:no-sandbox": "npm run test --watch  --browsers=ChromeHeadlessCI",
+    "test:no-sandbox": "yarn test --watch  --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

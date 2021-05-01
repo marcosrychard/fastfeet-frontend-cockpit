@@ -1,6 +1,6 @@
-import { DeliveryStatusPaginatorResponseModel } from '../response/delivery-status-paginator-response.model';
-import { DeliveryManPaginatorResponseModel } from '../response/deliveryman-paginator-response.model';
-import { RecipientPaginatorResponseModel } from '../response/recipient-response.model';
+import { DeliveryStatusViewModel } from './delivery-status.view-model';
+import { DeliveryManViewModel } from './deliveryman.view-model';
+import { RecipientViewModel } from './recipient-view-model';
 
 export class DeliveryViewModel {
   id: string;
@@ -13,9 +13,9 @@ export class DeliveryViewModel {
   recipient_id: string;
   created_at: Date;
   updated_at: Date;
-  delivery_status: DeliveryStatusPaginatorResponseModel;
-  deliveryman: DeliveryManPaginatorResponseModel;
-  recipient: RecipientPaginatorResponseModel;
+  delivery_status: DeliveryStatusViewModel;
+  deliveryman: DeliveryManViewModel;
+  recipient: RecipientViewModel;
 
   constructor(data: DeliveryViewModel) {
     this.id = data.id;

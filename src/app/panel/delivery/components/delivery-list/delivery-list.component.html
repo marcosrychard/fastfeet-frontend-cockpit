@@ -1,0 +1,90 @@
+<article id="delivery-list" *ngIf="!loading">
+  <app-page-header-list
+    [title]="'Gerenciando encomendas'"
+    [label]="'Buscar por encomendas'"
+    [link]="'/cockpit/delivery/form'"
+    [iconName]="'add'"
+    [buttonName]="'CADASTRAR'"
+  >
+  </app-page-header-list>
+
+  <section class="row table-custom table-responsive">
+    <table class="table table-borderless table-custom mb-0 pb-0">
+      <thead>
+        <tr>
+          <th scope="col">Destinatário</th>
+          <th scope="col">Produto</th>
+          <th scope="col">Entregador</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Status</th>
+          <th scope="col" class="text-center">AÇÃO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let delivery of deliveryResponseModel.data">
+          <td>{{ delivery.recipient.name }}</td>
+          <td>{{ delivery.product }}</td>
+          <td>{{ delivery.deliveryman.name }}</td>
+          <td>{{ delivery.recipient.city }}</td>
+          <td>{{ delivery.recipient.state }}</td>
+
+          <td>
+            <div
+              class="delivery-status d-flex align-items-center"
+              [style.color]="delivery.delivery_status.primary_color"
+              [style.background-color]="
+                delivery?.delivery_status.segudary_color
+              "
+            >
+              <span class="material-icons point"> fiber_manual_record </span>
+
+              <span class="mx-auto">
+                {{ delivery.delivery_status.description }}
+              </span>
+            </div>
+          </td>
+
+          <td class="p-0 action text-center">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_horiz</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu" class="px-2">
+              <button mat-menu-item (click)="openDialog(delivery.id)">
+                <mat-icon color="primary">remove_red_eye</mat-icon>
+                <span>Visualizar</span>
+              </button>
+
+              <mat-divider></mat-divider>
+
+              <button mat-menu-item (click)="goForm(delivery)">
+                <mat-icon color="accent">edit</mat-icon>
+                <span>Editar</span>
+              </button>
+
+              <mat-divider></mat-divider>
+
+              <button mat-menu-item (click)="goForm(delivery)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Excluir</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="row pb-3">
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="totalItems"
+      [pageSize]="pageSize"
+      [showFirstLastButtons]="showFirstLastButtons"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+    >
+    </mat-paginator>
+  </section>
+</article>

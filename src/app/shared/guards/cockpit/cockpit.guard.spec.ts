@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { CockpitGuard } from './cockpit.guard';
 
 describe('CockpitGuard', () => {
@@ -9,15 +9,15 @@ describe('CockpitGuard', () => {
   beforeEach(() => {
     const authServiceStub = () => ({ getDataUserStorage: () => ({}) });
     const toastrServiceStub = () => ({ error: (string, string1) => ({}) });
-    
+
     TestBed.configureTestingModule({
       providers: [
         CockpitGuard,
         { provide: AuthService, useFactory: authServiceStub },
-        { provide: ToastrService, useFactory: toastrServiceStub }
-      ]
+        { provide: ToastrService, useFactory: toastrServiceStub },
+      ],
     });
-    
+
     service = TestBed.inject(CockpitGuard);
   });
 

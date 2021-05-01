@@ -39,4 +39,13 @@ export class DeliveryService {
       }
     );
   }
+
+  public findAllProblemaGroupDeliveryId(params = {}) {
+    return this.http.get<DeliveryProblemPaginatorResponseModel>(
+      `${this.url}/group-delivery/problems`,
+      {
+        params,
+      }
+    );
+  }
 }
