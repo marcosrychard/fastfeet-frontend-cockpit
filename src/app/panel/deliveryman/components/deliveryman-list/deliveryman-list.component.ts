@@ -3,8 +3,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { DeliveryManPaginatorResponseModel } from 'src/app/shared/models/response/deliveryman-paginator-response.model';
 import { DeliveryManViewModel } from 'src/app/shared/models/view-models/deliveryman.view-model';
-import { ClaimService } from 'src/app/shared/services/claims/claim.service';
 import { DeliverymanService } from 'src/app/shared/services/deliveryman/deliveryman.service';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 @Component({
   selector: 'app-deliveryman-list',
   templateUrl: './deliveryman-list.component.html',
@@ -19,21 +19,19 @@ export class DeliverymanListComponent implements OnInit {
   public pageSizeOptions = [5, 10, 25];
   public deliveryManResponseModel: DeliveryManPaginatorResponseModel;
 
-  private claims = [];
-
   constructor(
     private router: Router,
-    private claimService: ClaimService,
-    private deliverymanService: DeliverymanService
+    private deliverymanService: DeliverymanService,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.findAllDeliveryman({ page: this.pageIndex, limit: this.pageSize });
-    this.checkHasClaim();
   }
 
   public goForm(data: DeliveryManViewModel) {
-    this.router.navigate(['/cockpit/deliveryman/form/' + data.id]);
+    this.router.navigate(['/panel/deliveryman/form/' + data.id]);
   }
 
   public handlePageEvent(event: PageEvent) {
@@ -49,13 +47,11 @@ export class DeliverymanListComponent implements OnInit {
       (res: DeliveryManPaginatorResponseModel) => {
         this.deliveryManResponseModel = res;
         this.totalItems = this.deliveryManResponseModel.meta.totalItems;
-        this.loading = false;
+        this.loadingService.stop();
       },
-      (error) => {}
+      (error) => {
+        this.loadingService.stop();
+      }
     );
-  }
-
-  private checkHasClaim() {
-    this.claimService.checkHasClaim(this.claims);
   }
 }

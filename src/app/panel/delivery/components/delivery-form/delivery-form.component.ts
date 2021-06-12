@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, of, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { forkJoin, Subscription } from 'rxjs';
 import { TypeActionEnum } from 'src/app/core/enums/type-action.enum';
 import { DeliveryRequestModel } from 'src/app/shared/models/request/delivery-request.model';
 import { DeliveryManPaginatorResponseModel } from 'src/app/shared/models/response/deliveryman-paginator-response.model';
@@ -51,10 +50,10 @@ export class DeliveryFormComponent implements OnInit, OnDestroy {
     if (this.deliveryForm.valid) {
       const data = new DeliveryRequestModel(this.deliveryForm.value);
 
-      if (event === TypeActionEnum.CREATE) {
-        this.createDelivery(data);
-      } else {
+      if (event === TypeActionEnum.UPDATE) {
         this.updateDelivery(data);
+      } else {
+        this.createDelivery(data);
       }
 
       this.goList();
@@ -62,23 +61,15 @@ export class DeliveryFormComponent implements OnInit, OnDestroy {
   }
 
   goList() {
-    this.router.navigate(['/cockpit/delivery/list']);
+    this.router.navigate(['/panel/delivery/list']);
   }
 
   createDelivery(data: DeliveryRequestModel) {
-    this.deliveryService
-      .createDelivery(data)
-      .subscribe((res: DeliveryRequestModel) => {
-        console.log('createDelivery', res);
-      });
+    this.deliveryService.createDelivery(data).subscribe(() => console.log);
   }
 
   updateDelivery(data: DeliveryRequestModel) {
-    this.deliveryService
-      .updateDelivery(data)
-      .subscribe((res: DeliveryRequestModel) => {
-        console.log('updateDelivery', res);
-      });
+    this.deliveryService.updateDelivery(data).subscribe(() => console.log);
   }
 
   forkJoinCall() {
@@ -86,22 +77,20 @@ export class DeliveryFormComponent implements OnInit, OnDestroy {
       forkJoin([
         this.deliverymanService.findAllDeliveryman(),
         this.recipientService.findAllRecipients(),
-      ])
-        .pipe(catchError((error) => of(error)))
-        .subscribe(
-          ([delivery, recipien]) => {
-            this.deliveryManResponseModel = new DeliveryManPaginatorResponseModel(
-              delivery
-            );
-            this.recipientResponseModel = new RecipientPaginatorResponseModel(
-              recipien
-            );
-            this.loading = false;
-          },
-          (error) => {
-            console.log('forkJoinCall', error);
-          }
-        )
+      ]).subscribe(
+        ([deliveryman, recipient]) => {
+          this.deliveryManResponseModel = new DeliveryManPaginatorResponseModel(
+            deliveryman
+          );
+          this.recipientResponseModel = new RecipientPaginatorResponseModel(
+            recipient
+          );
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+        }
+      )
     );
   }
 
@@ -123,8 +112,8 @@ export class DeliveryFormComponent implements OnInit, OnDestroy {
             if (res) {
               this.deliveryForm.setValue(new DeliveryRequestModel(res));
               this.typeAction = TypeActionEnum.UPDATE;
-              this.loadingDelivery = false;
             }
+            this.loadingDelivery = false;
           },
           (error) => {
             this.loadingDelivery = false;

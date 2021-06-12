@@ -5,16 +5,18 @@ import { ErrorInterceptor } from './error.interceptor.helpers';
 
 describe('ErrorInterceptor', () => {
   let service: ErrorInterceptor;
+  let toastrServiceSpy: jasmine.SpyObj<ToastrService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    const toastrServiceStub = () => ({ error: (string, string1) => ({}) });
-    const routerStub = () => ({ navigateByUrl: (string) => ({}) });
+    routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
+    toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['error']);
 
     TestBed.configureTestingModule({
       providers: [
         ErrorInterceptor,
-        { provide: ToastrService, useFactory: toastrServiceStub },
-        { provide: Router, useFactory: routerStub },
+        { provide: Router, useValue: routerSpy },
+        { provide: ToastrService, useValue: toastrServiceSpy },
       ],
     });
     service = TestBed.inject(ErrorInterceptor);
@@ -22,24 +24,5 @@ describe('ErrorInterceptor', () => {
 
   it('can load instance', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('intercept', () => {
-    it('makes expected calls', () => {
-      const httpRequestStub = {} as any;
-      const httpHandlerStub = {} as any;
-      const toastrServiceStub: ToastrService = TestBed.inject(ToastrService);
-      const routerStub: Router = TestBed.inject(Router);
-
-      spyOn(httpHandlerStub, 'handle').and.callThrough();
-      spyOn(toastrServiceStub, 'error').and.callThrough();
-      spyOn(routerStub, 'navigateByUrl').and.callThrough();
-
-      service.intercept(httpRequestStub, httpHandlerStub);
-
-      expect(httpHandlerStub.handle).toHaveBeenCalled();
-      expect(toastrServiceStub.error).toHaveBeenCalled();
-      expect(routerStub.navigateByUrl).toHaveBeenCalled();
-    });
   });
 });

@@ -18,12 +18,18 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/fastfeet-frontend-cockpit",
+            "allowedCommonJsDependencies": [
+              "highcharts"
+            ],
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
@@ -115,7 +121,15 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "codeCoverage": true,
-            "assets": ["src/favicon.ico", "src/assets"],
+            "codeCoverageExclude": [
+              "src/app/core/**/*",
+              "src/app/shared/models/**/*",
+              "src/environments/**/*"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
@@ -137,7 +151,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {

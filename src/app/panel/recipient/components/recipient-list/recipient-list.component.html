@@ -1,14 +1,14 @@
-<article id="recipient-list">
+<article id="recipient-list" *ngIf="!loadingService.loading">
   <app-page-header-list
     [title]="'Gerenciando destinatários'"
     [label]="'Buscar por destinatários'"
     [iconName]="'add'"
-    [link]="'/cockpit/recipient/form'"
+    [link]="'/panel/recipient/form'"
     [buttonName]="'CADASTRAR'"
   >
   </app-page-header-list>
 
-  <section class="row table-custom table-responsive" *ngIf="!loading">
+  <section class="row table-custom table-responsive">
     <table class="table table-borderless table-custom">
       <thead>
         <tr>

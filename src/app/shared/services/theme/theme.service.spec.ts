@@ -11,7 +11,7 @@ describe('ThemeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ThemeService]
+      providers: [ThemeService],
     });
     service = TestBed.inject(ThemeService);
   });
@@ -23,11 +23,13 @@ describe('ThemeService', () => {
   describe('getColorFromFile', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
-      service.getColorFromFile().subscribe(res => {
+      service.getColorFromFile().subscribe((res) => {
         expect(res).toEqual([]);
       });
 
-      const req = httpTestingController.expectOne('HTTP_ROUTE_GOES_HERE');
+      const req = httpTestingController.expectOne(
+        'assets/files/color/color.json'
+      );
       expect(req.request.method).toEqual('GET');
       req.flush([]);
       httpTestingController.verify();
@@ -37,11 +39,13 @@ describe('ThemeService', () => {
   describe('getImgFromFile', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
-      service.getImgFromFile().subscribe(res => {
+      service.getImgFromFile().subscribe((res) => {
         expect(res).toEqual([]);
       });
 
-      const req = httpTestingController.expectOne('HTTP_ROUTE_GOES_HERE');
+      const req = httpTestingController.expectOne(
+        'assets/files/images/images.json'
+      );
       expect(req.request.method).toEqual('GET');
       req.flush([]);
       httpTestingController.verify();
@@ -51,11 +55,13 @@ describe('ThemeService', () => {
   describe('getTextFromFile', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
-      service.getTextFromFile().subscribe(res => {
+      service.getTextFromFile().subscribe((res) => {
         expect(res).toEqual([]);
       });
 
-      const req = httpTestingController.expectOne('HTTP_ROUTE_GOES_HERE');
+      const req = httpTestingController.expectOne(
+        'assets/files/text/text.json'
+      );
       expect(req.request.method).toEqual('GET');
       req.flush([]);
       httpTestingController.verify();

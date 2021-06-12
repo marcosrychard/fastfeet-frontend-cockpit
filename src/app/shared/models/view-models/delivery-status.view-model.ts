@@ -4,7 +4,7 @@ export class DeliveryStatusViewModel {
   description: string;
   primary_color: string;
   segudary_color: string;
-  value_status: string;
+  value_status: number;
   created_at: Date;
   updated_at: Date;
 

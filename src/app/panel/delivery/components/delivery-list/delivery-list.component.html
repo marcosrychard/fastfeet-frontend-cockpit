@@ -1,29 +1,29 @@
-<article id="delivery-list" *ngIf="!loading">
+<article id="delivery-list" *ngIf="!loadingService.loading">
   <app-page-header-list
     [title]="'Gerenciando encomendas'"
     [label]="'Buscar por encomendas'"
-    [link]="'/cockpit/delivery/form'"
+    [link]="'/panel/delivery/form'"
     [iconName]="'add'"
     [buttonName]="'CADASTRAR'"
   >
   </app-page-header-list>
 
   <section class="row table-custom table-responsive">
-    <table class="table table-borderless table-custom mb-0 pb-0">
+    <table class="table table-borderless">
       <thead>
         <tr>
-          <th scope="col">Destinatário</th>
+          <th scope="col ">Destinatário</th>
           <th scope="col">Produto</th>
           <th scope="col">Entregador</th>
           <th scope="col">Cidade</th>
           <th scope="col">Estado</th>
           <th scope="col">Status</th>
-          <th scope="col" class="text-center">AÇÃO</th>
+          <th scope="col" class="text-center fixed-col-right">AÇÃO</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let delivery of deliveryResponseModel.data">
-          <td>{{ delivery.recipient.name }}</td>
+          <td class="">{{ delivery.recipient.name }}</td>
           <td>{{ delivery.product }}</td>
           <td>{{ delivery.deliveryman.name }}</td>
           <td>{{ delivery.recipient.city }}</td>
@@ -45,7 +45,7 @@
             </div>
           </td>
 
-          <td class="p-0 action text-center">
+          <td class="action fixed-col-right">
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_horiz</mat-icon>
             </button>

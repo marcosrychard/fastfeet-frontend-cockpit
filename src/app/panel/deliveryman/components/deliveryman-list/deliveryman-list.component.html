@@ -1,14 +1,14 @@
-<article id="deliveryman-list">
+<article id="deliveryman-list" *ngIf="!loadingService.loading">
   <app-page-header-list
     [title]="'Gerenciando entregadores'"
     [label]="'Buscar por entregadores'"
     [iconName]="'add'"
-    [link]="'/cockpit/deliveryman/form'"
+    [link]="'/panel/deliveryman/form'"
     [buttonName]="'CADASTRAR'"
   >
   </app-page-header-list>
 
-  <section class="row table-custom table-responsive" *ngIf="!loading">
+  <section class="row table-custom table-responsive">
     <table class="table table-borderless table-custom mb-0 pb-0">
       <thead>
         <tr>

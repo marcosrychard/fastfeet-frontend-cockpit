@@ -2,7 +2,7 @@
   <header>
     <app-page-header-form
       [title]="'Cadastro encomendas'"
-      [linkBack]="'/cockpit/delivery/list'"
+      [linkBack]="'/panel/delivery/list'"
       [typeAction]="typeAction"
       (nameTypeAction)="onSubmit($event)"
     ></app-page-header-form>
@@ -47,4 +47,9 @@
       </form>
     </mat-card-content>
   </mat-card>
+
+  <app-loading
+    *ngIf="loadingDelivery"
+    class="d-flex justify-content-center"
+  ></app-loading>
 </section>

@@ -36,7 +36,7 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  public onSubmit(event: string) {
+  onSubmit(event: string) {
     if (this.deliverymanForm.valid) {
       const data = new DeliverymanRequestModel(this.deliverymanForm.value);
 
@@ -50,11 +50,11 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public goList() {
-    this.router.navigate(['/cockpit/deliveryman/list']);
+  goList() {
+    this.router.navigate(['/panel/deliveryman/list']);
   }
 
-  private createDeliveryman(data: DeliverymanRequestModel) {
+  createDeliveryman(data: DeliverymanRequestModel) {
     this.deliverymanService
       .createDeliveryman(data)
       .subscribe((res: DeliveryManViewModel) => {
@@ -62,7 +62,7 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  private updateDeliveryman(data: DeliverymanRequestModel) {
+  updateDeliveryman(data: DeliverymanRequestModel) {
     this.deliverymanService
       .updateDeliveryman(data)
       .subscribe((res: DeliveryManViewModel) => {
@@ -70,7 +70,7 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  private findDeliverymanById(id: string) {
+  findDeliverymanById(id: string) {
     this.subscriptions.add(
       this.deliverymanService.findByDeliverymanId(id).subscribe(
         (res: DeliverymanRequestModel) => {
@@ -87,7 +87,7 @@ export class DeliverymanFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  private buildForm() {
+  buildForm() {
     this.deliverymanForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],

@@ -1,5 +1,8 @@
-<article id="delivery-problem" class="container mt-4">
-  <h3></h3>
+<article
+  id="delivery-problem"
+  class="container mt-4"
+  *ngIf="!loadingService.loading"
+>
   <app-page-header-list
     [title]="'Problemas na entrega'"
     [label]="'Buscar por problemas'"
@@ -7,7 +10,7 @@
   >
   </app-page-header-list>
 
-  <section class="row table-custom table-responsive" *ngIf="!loading">
+  <section class="row table-custom table-responsive">
     <table class="table table-borderless table-custom mb-0 pb-0">
       <thead>
         <tr>

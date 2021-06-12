@@ -1,4 +1,4 @@
-export  class MockActivatedRoute {
+export class MockActivatedRoute {
   snapshot = { params: { id: '' } };
 
   setParameter(arg: string) {

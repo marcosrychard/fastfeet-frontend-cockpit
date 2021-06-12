@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { DeliveryProblemPaginatorResponseModel } from 'src/app/shared/models/response/delivery-problem-paginator-response.model';
 import { DeliveryService } from 'src/app/shared/services/delivery/delivery.service';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 
 @Component({
   selector: 'app-delivery-problem-list',
@@ -11,15 +12,18 @@ import { DeliveryService } from 'src/app/shared/services/delivery/delivery.servi
 export class DeliveryProblemListComponent implements OnInit {
   public pageSize = 10;
   public pageIndex = 0;
-  public loading = true;
   public totalItems: number;
   public showFirstLastButtons = true;
   public pageSizeOptions = [5, 10, 25];
   public deliveryProblem: DeliveryProblemPaginatorResponseModel;
 
-  constructor(private deliveryService: DeliveryService) {}
+  constructor(
+    private deliveryService: DeliveryService,
+    public loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.findAllProblemaGroupDeliveryId({
       page: this.pageIndex,
       limit: this.pageSize,
@@ -42,10 +46,10 @@ export class DeliveryProblemListComponent implements OnInit {
       (res: DeliveryProblemPaginatorResponseModel) => {
         this.deliveryProblem = new DeliveryProblemPaginatorResponseModel(res);
         this.totalItems = +this.deliveryProblem.meta.totalItems;
-        this.loading = false;
+        this.loadingService.stop();
       },
       (error) => {
-        this.loading = false;
+        this.loadingService.stop();
       }
     );
   }

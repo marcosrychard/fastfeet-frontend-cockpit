@@ -15,23 +15,23 @@ export class DeliveryService {
     this.url = environment.BASE_URL + environment.DELIVERIES;
   }
 
-  public findAllDeliveries(params = {}) {
+  findAllDeliveries(params = {}) {
     return this.http.get<DeliveryPaginatorResponseModel>(this.url, { params });
   }
 
-  public findByDeliveryId(id: string) {
+  findByDeliveryId(id: string) {
     return this.http.get<DeliveryViewModel>(`${this.url}/${id}`);
   }
 
-  public createDelivery(data: DeliveryRequestModel) {
+  createDelivery(data: DeliveryRequestModel) {
     return this.http.post<DeliveryViewModel>(this.url, data);
   }
 
-  public updateDelivery(data: DeliveryRequestModel) {
+  updateDelivery(data: DeliveryRequestModel) {
     return this.http.put<DeliveryViewModel>(`${this.url}/${data.id}`, data);
   }
 
-  public findAllDeliveryProblems(params = {}) {
+  findAllDeliveryProblems(params = {}) {
     return this.http.get<DeliveryProblemPaginatorResponseModel>(
       `${this.url}/list/problems`,
       {
@@ -40,7 +40,7 @@ export class DeliveryService {
     );
   }
 
-  public findAllProblemaGroupDeliveryId(params = {}) {
+  findAllProblemaGroupDeliveryId(params = {}) {
     return this.http.get<DeliveryProblemPaginatorResponseModel>(
       `${this.url}/group-delivery/problems`,
       {

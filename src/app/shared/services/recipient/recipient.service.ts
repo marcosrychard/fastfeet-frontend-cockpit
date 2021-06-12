@@ -12,22 +12,22 @@ export class RecipientService {
   private url: string;
 
   constructor(private http: HttpClient) {
-    this.url = environment.BASE_URL + environment.DELIVERYMANS;
+    this.url = environment.BASE_URL + environment.RECIPIENTS;
   }
 
-  public findAllRecipients(params = {}) {
+  findAllRecipients(params = {}) {
     return this.http.get<RecipientPaginatorResponseModel>(this.url, { params });
   }
 
-  public findByRecipientId(id: string) {
+  findByRecipientId(id: string) {
     return this.http.get<RecipientViewModel>(`${this.url}/${id}`);
   }
 
-  public createRecipient(data: RecipientRequestModel) {
+  createRecipient(data: RecipientRequestModel) {
     return this.http.post<RecipientViewModel>(this.url, data);
   }
 
-  public updateRecipient(data: RecipientRequestModel) {
+  updateRecipient(data: RecipientRequestModel) {
     return this.http.put<RecipientViewModel>(`${this.url}/${data.id}`, data);
   }
 }

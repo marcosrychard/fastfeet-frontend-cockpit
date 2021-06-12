@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { TypeActionEnum } from 'src/app/core/enums/type-action.enum';
 import { RecipientRequestModel } from 'src/app/shared/models/request/recipient-request.model';
 import { RecipientViewModel } from 'src/app/shared/models/view-models/recipient-view-model';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { RecipientService } from 'src/app/shared/services/recipient/recipient.service';
 
 @Component({
@@ -13,21 +14,22 @@ import { RecipientService } from 'src/app/shared/services/recipient/recipient.se
   styleUrls: ['./recipient-form.component.scss'],
 })
 export class RecipientFormComponent implements OnInit, OnDestroy {
-  public loading = true;
   public recipientForm: FormGroup;
   public typeAction = TypeActionEnum.CREATE;
 
-  private id = this.route.snapshot.params.id;
+  private id: string;
   private subscriptions = new Subscription();
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private recipientService: RecipientService
+    private recipientService: RecipientService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params.id;
     this.buildForm();
     this.findDeliveryById(this.id);
   }
@@ -36,7 +38,7 @@ export class RecipientFormComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  public onSubmit(event: string) {
+  onSubmit(event: string) {
     if (this.recipientForm.valid) {
       const data = new RecipientRequestModel(this.recipientForm.value);
 
@@ -50,11 +52,11 @@ export class RecipientFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  public goList() {
-    this.router.navigate(['/cockpit/recipient/list']);
+  goList() {
+    this.router.navigate(['/panel/recipient/list']);
   }
 
-  private updateRecipient(data: RecipientRequestModel) {
+  updateRecipient(data: RecipientRequestModel) {
     this.recipientService
       .updateRecipient(data)
       .subscribe((res: RecipientViewModel) => {
@@ -62,7 +64,7 @@ export class RecipientFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  private createRecipient(data: RecipientRequestModel) {
+  createRecipient(data: RecipientRequestModel) {
     this.recipientService
       .createRecipient(data)
       .subscribe((res: RecipientViewModel) => {
@@ -70,7 +72,8 @@ export class RecipientFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  private findDeliveryById(id: string) {
+  findDeliveryById(id: string) {
+    this.loadingService.show();
     if (id) {
       this.subscriptions.add(
         this.recipientService.findByRecipientId(id).subscribe(
@@ -78,18 +81,18 @@ export class RecipientFormComponent implements OnInit, OnDestroy {
             if (res) {
               this.recipientForm.setValue(new RecipientRequestModel(res));
               this.typeAction = TypeActionEnum.UPDATE;
-              this.loading = false;
+              this.loadingService.stop();
             }
           },
           (error) => {
-            this.loading = false;
+            this.loadingService.stop();
           }
         )
       );
     }
   }
 
-  private buildForm() {
+  buildForm() {
     this.recipientForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],

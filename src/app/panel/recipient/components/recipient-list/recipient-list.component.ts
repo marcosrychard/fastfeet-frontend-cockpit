@@ -3,6 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { RecipientPaginatorResponseModel } from 'src/app/shared/models/response/recipient-response.model';
 import { RecipientViewModel } from 'src/app/shared/models/view-models/recipient-view-model';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 import { RecipientService } from 'src/app/shared/services/recipient/recipient.service';
 
 @Component({
@@ -21,15 +22,17 @@ export class RecipientListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private recipientServie: RecipientService
+    private recipientServie: RecipientService,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
+    this.loadingService.show();
     this.findAllRecipients({ page: this.pageIndex, limit: this.pageSize });
   }
 
   public goForm(data: RecipientViewModel) {
-    this.router.navigate(['/cockpit/recipient/form/' + data.id]);
+    this.router.navigate(['/panel/recipient/form/' + data.id]);
   }
 
   public handlePageEvent(event: PageEvent) {
@@ -46,7 +49,7 @@ export class RecipientListComponent implements OnInit {
       .subscribe((res: RecipientPaginatorResponseModel) => {
         this.recipientResponseModel = res;
         this.totalItems = this.recipientResponseModel.meta.totalItems;
-        this.loading = false;
+        this.loadingService.stop();
       });
   }
 }
